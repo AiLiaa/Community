@@ -1,2 +1,27 @@
 server:
-  port: 8088
+  port: 80
+  # 应用的上下文路径，也可以称为项目路径，是构成url地址的一部分
+  # 此时的访问方式为localhost:8088/community/xxxxxx
+  servlet:
+    context-path: /community
+
+spring:
+  # ThymeleafProperties 模板缓存
+  thymeleaf:
+    cache: false
+  # DataSourceProperties
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/community?characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 5
+      idle-timeout: 30000
+
+
+
+
+
