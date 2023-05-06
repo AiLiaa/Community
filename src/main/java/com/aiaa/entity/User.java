@@ -20,8 +20,8 @@ public class User {
     private String email;
     private int type;
     private int status;
-    private String activation_code;
-    private String header_url;
-    private Date create_time;
+    private String activationCode;
+    private String headerUrl;
+    private Date createTime;
 
 }

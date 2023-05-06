@@ -15,14 +15,14 @@ public class DiscussPostMapperTest {
     @Test
     public void selectDiscussPostsTest(){
 
-        List<DiscussPost> discussPosts = discussPostMapper.selectDiscussPosts(166, 0, 10);
+        List<DiscussPost> discussPosts = discussPostMapper.selectDiscussPosts(0, 0, 10);
         System.out.println(discussPosts.toString());
     }
 
     @Test
     public void selectDiscussPostRowsTest(){
 
-        int i = discussPostMapper.selectDiscussPostRows(101);
+        int i = discussPostMapper.selectDiscussPostRows(0);
         System.out.println(i);
     }
 }

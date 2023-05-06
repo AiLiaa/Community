@@ -6,9 +6,11 @@ server:
     context-path: /community
 
 spring:
+
   # ThymeleafProperties 模板缓存
   thymeleaf:
     cache: false
+
   # DataSourceProperties
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -21,7 +23,23 @@ spring:
       minimum-idle: 5
       idle-timeout: 30000
 
+  # MailProperties
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 1067550651@qq.com
+    password: rlvcgiodachcbfea
+    protocol: smtps
+    default-encoding: UTF-8
+  banner:
+    charset: UTF-8
 
-
-
-
+# MybatisProperties
+mybatis:
+  configuration:
+    # 自动转驼峰
+    map-underscore-to-camel-case: true
+    # 允许JDBC支持自动生成主键，需要驱动兼容
+    use-generated-keys: true
+    # 控制台标准日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

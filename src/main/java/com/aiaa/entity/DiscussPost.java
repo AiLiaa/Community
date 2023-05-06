@@ -14,13 +14,13 @@ import java.util.Date;
 public class DiscussPost {
 
     private int id;
-    private int user_id;
+    private int userId;
     private String title;
     private String content;
     private int type;
     private int status;
-    private Date create_time;
-    private int comment_Count;
+    private Date createTime;
+    private int commentCount;
     private double score;
 
 }
