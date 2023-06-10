@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class DiscussPostService {
+
     @Autowired
     private DiscussPostMapper discussPostMapper;
 

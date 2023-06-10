@@ -5,6 +5,10 @@ server:
   servlet:
     context-path: /community
 
+Community:
+  path:
+    domain: http://127.0.0.1:80
+
 spring:
 
   # ThymeleafProperties 模板缓存
@@ -26,9 +30,9 @@ spring:
   # MailProperties
   mail:
     host: smtp.qq.com
-    port: 587
+    port: 465
     username: 1067550651@qq.com
-    password: rlvcgiodachcbfea
+    password: zjnvhzigxilebchb
     protocol: smtps
     default-encoding: UTF-8
   banner:
