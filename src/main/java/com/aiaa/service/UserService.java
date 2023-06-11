@@ -104,6 +104,9 @@ public class UserService {
 
     public int activation(int userId, String code) {
         User user = userMapper.selectById(userId);
+        if (user == null){
+            return ACTIVATION_FAILURE;
+        }
         if (user.getStatus() == 1) {
             return ACTIVATION_REPEAT;
         } else if (user.getActivationCode().equals(code)) {
@@ -159,4 +162,15 @@ public class UserService {
         return map;
     }
 
+    public LoginTicket findLoginTicket(String ticket) {
+        return loginTicketMapper.selectByTicket(ticket);
+    }
+
+    public void logout(String ticket) {
+        loginTicketMapper.updateStatus(ticket, 1);
+    }
+
+    public void updateHeader(int id, String headerUrl) {
+        userMapper.updateHeader(id,headerUrl);
+    }
 }

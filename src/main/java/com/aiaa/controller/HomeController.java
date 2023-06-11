@@ -1,5 +1,6 @@
 package com.aiaa.controller;
 
+import com.aiaa.annotation.LoginRequired;
 import com.aiaa.entity.DiscussPost;
 import com.aiaa.entity.Page;
 import com.aiaa.entity.User;
@@ -32,6 +33,7 @@ public class HomeController {
     /**
      * 分页显示首页帖子
      */
+    @LoginRequired
     @RequestMapping(path = {"/index","/"},method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page){
         //logger.info("首页显示10个帖子");

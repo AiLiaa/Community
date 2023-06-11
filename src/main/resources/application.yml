@@ -8,6 +8,7 @@ server:
 Community:
   path:
     domain: http://127.0.0.1:80
+    upload: E:\一大堆\Java\社区网站\upload
 
 spring:
 
