@@ -190,7 +190,7 @@
 	<script>
 		// 刷新验证码
 		function refresh_kaptcha() {
-			var path = "/community/kaptcha?p=" + Math.random();
+			var path = CONTEXT_PATH + "/kaptcha?p=" + Math.random();
 			$("#kaptcha").attr("src", path);
 		}
 	</script>
