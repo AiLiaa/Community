@@ -1,6 +1,7 @@
 package com.aiaa.controller;
 
 import com.aiaa.entity.DiscussPost;
+import com.aiaa.entity.Page;
 import com.aiaa.entity.User;
 import com.aiaa.service.DiscussPostService;
 import com.aiaa.service.UserService;
@@ -9,6 +10,8 @@ import com.aiaa.util.CommunityUtil;
 import com.aiaa.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,5 +50,20 @@ public class DiscussPostController implements CommunityConstant {
         discussPostService.addDiscussPost(post);
 
         return CommunityUtil.getJSONString(0, "发布成功!");
+    }
+
+    /**
+     * 帖子详情
+     */
+    @RequestMapping(path = "/detail/{discussPostId}", method = RequestMethod.GET)
+    public String getDiscussPost(@PathVariable("discussPostId") int discussPostId, Model model, Page page) {
+        // 帖子
+        DiscussPost post = discussPostService.findDiscussPostById(discussPostId);
+        model.addAttribute("post", post);
+        // 作者
+        User user = userService.findUserById(post.getUserId());
+        model.addAttribute("user", user);
+
+        return "/site/discuss-detail";
     }
 }

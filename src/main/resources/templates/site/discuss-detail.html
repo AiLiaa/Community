@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="icon" href="https://static.nowcoder.com/images/logo_87_87.png"/>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
-	<link rel="stylesheet" href="../css/global.css" />
-	<link rel="stylesheet" href="../css/discuss-detail.css" />
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/discuss-detail.css}" />
 	<title>牛客网-帖子详情</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
 				<!-- 导航 -->
 				<nav class="navbar navbar-expand-lg navbar-dark">
 					<!-- logo -->
-					<a class="navbar-brand" href="#"></a>
+					<a class="navbar-brand" th:href="@{/}"></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
@@ -25,32 +25,33 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav mr-auto">
 							<li class="nav-item ml-3 btn-group-vertical">
-								<a class="nav-link" href="../index.html">首页</a>
+								<a class="nav-link" th:href="@{/}">首页</a>
 							</li>
 							<li class="nav-item ml-3 btn-group-vertical">
-								<a class="nav-link position-relative" href="letter.html">消息<span class="badge badge-danger">12</span></a>
+								<a class="nav-link position-relative" href="site/letter.html">消息<span class="badge badge-danger">12</span></a>
 							</li>
 							<li class="nav-item ml-3 btn-group-vertical">
-								<a class="nav-link" href="register.html">注册</a>
+								<a class="nav-link" th:href="@{/register}">注册</a>
 							</li>
 							<li class="nav-item ml-3 btn-group-vertical">
-								<a class="nav-link" href="login.html">登录</a>
+								<a class="nav-link" th:href="@{/login}">登录</a>
 							</li>
 							<li class="nav-item ml-3 btn-group-vertical dropdown">
+
 								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<img src="http://images.nowcoder.com/head/1t.png" class="rounded-circle" style="width:30px;"/>
+									<img th:src="${loginUser.headerUrl}" class="rounded-circle" style="width:30px;"/>
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<a class="dropdown-item text-center" href="profile.html">个人主页</a>
-									<a class="dropdown-item text-center" href="setting.html">账号设置</a>
-									<a class="dropdown-item text-center" href="login.html">退出登录</a>
+									<a class="dropdown-item text-center" href="site/profile.html">个人主页</a>
+									<a class="dropdown-item text-center" th:href="@{/user/setting}">账号设置</a>
+									<a class="dropdown-item text-center" th:href="@{/logout}">退出登录</a>
 									<div class="dropdown-divider"></div>
 									<span class="dropdown-item text-center text-secondary">nowcoder</span>
 								</div>
 							</li>
 						</ul>
 						<!-- 搜索 -->
-						<form class="form-inline my-2 my-lg-0" action="search.html">
+						<form class="form-inline my-2 my-lg-0" action="site/search.html">
 							<input class="form-control mr-sm-2" type="search" aria-label="Search" />
 							<button class="btn btn-outline-light my-2 my-sm-0" type="submit">搜索</button>
 						</form>
@@ -66,32 +67,40 @@
 				<!-- 标题 -->
 				<h6 class="mb-4">
 					<img src="http://static.nowcoder.com/images/img/icons/ico-discuss.png"/>
-					<span>备战春招，面试刷题跟他复习，一个月全搞定！</span>
+					<span th:utext="${post.title}">备战春招，面试刷题跟他复习，一个月全搞定！</span>
 					<div class="float-right">
-						<button type="button" class="btn btn-danger btn-sm">置顶</button>
-						<button type="button" class="btn btn-danger btn-sm">加精</button>
-						<button type="button" class="btn btn-danger btn-sm">删除</button>
+						<input type="hidden" id="postId" th:value="${post.id}">
+						<button type="button" class="btn btn-danger btn-sm" id="topBtn"
+								th:disabled="${post.type==1}" sec:authorize="hasAnyAuthority('moderator')">置顶</button>
+						<button type="button" class="btn btn-danger btn-sm" id="wonderfulBtn"
+								th:disabled="${post.status==1}" sec:authorize="hasAnyAuthority('moderator')">加精</button>
+						<button type="button" class="btn btn-danger btn-sm" id="deleteBtn"
+								th:disabled="${post.status==2}" sec:authorize="hasAnyAuthority('admin')">删除</button>
 					</div>
 				</h6>
 				<!-- 作者 -->
 				<div class="media pb-3 border-bottom">
 					<a href="profile.html">
-						<img src="http://images.nowcoder.com/head/1t.png" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
+						<img th:src="${user.headerUrl}" class="align-self-start mr-4 rounded-circle user-header" alt="用户头像" >
 					</a>
 					<div class="media-body">
-						<div class="mt-0 text-warning">寒江雪</div>
+						<div class="mt-0 text-warning" th:utext="${user.username}">寒江雪</div>
 						<div class="text-muted mt-3">
-							发布于 <b>2019-04-15 15:32:18</b>
+							发布于 <b th:text="${#dates.format(post.createTime,'yyyy-MM-dd HH:mm:ss')}">2019-04-15 15:32:18</b>
 							<ul class="d-inline float-right">
-								<li class="d-inline ml-2"><a href="#" class="text-primary">赞 11</a></li>
+								<li class="d-inline ml-2">
+									<a href="javascript:;" th:onclick="|like(this,1,${post.id},${post.userId},${post.id});|" class="text-primary">
+										<b>赞</b> <i>11</i>
+									</a>
+								</li>
 								<li class="d-inline ml-2">|</li>
-								<li class="d-inline ml-2"><a href="#replyform" class="text-primary">回帖 7</a></li>
+								<li class="d-inline ml-2"><a href="#replyform" class="text-primary">回帖 <i th:text="${post.commentCount}">7</i></a></li>
 							</ul>
 						</div>
 					</div>
-				</div>	
+				</div>
 				<!-- 正文 -->
-				<div class="mt-4 mb-3 content">
+				<div class="mt-4 mb-3 content" th:utext="${post.content}">
 					金三银四的金三已经到了，你还沉浸在过年的喜悦中吗？
 					如果是，那我要让你清醒一下了：目前大部分公司已经开启了内推，正式网申也将在3月份陆续开始，金三银四，春招的求职黄金时期已经来啦！！！
 					再不准备，作为19应届生的你可能就找不到工作了。。。作为20届实习生的你可能就找不到实习了。。。
@@ -154,7 +163,7 @@
 												<input type="text" class="input-size" placeholder="回复寒江雪"/>
 											</div>
 											<div class="text-right mt-2">
-												<button type="button" class="btn btn-primary btn-sm" onclick="#">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
+												<button type="button" class="btn btn-primary btn-sm" onclick="">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
 											</div>										
 										</div>
 									</div>								
@@ -177,7 +186,7 @@
 												<input type="text" class="input-size" placeholder="回复Sissi" />
 											</div>
 											<div class="text-right mt-2">
-												<button type="button" class="btn btn-primary btn-sm" onclick="#">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
+												<button type="button" class="btn btn-primary btn-sm" onclick="">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
 											</div>										
 										</div>																	
 									</div>								
@@ -188,7 +197,7 @@
 										<input type="text" class="input-size" placeholder="请输入你的观点"/>
 									</div>
 									<div class="text-right mt-2">
-										<button type="button" class="btn btn-primary btn-sm" onclick="#">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
+										<button type="button" class="btn btn-primary btn-sm" onclick="">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
 									</div>
 								</li>
 							</ul>
@@ -223,7 +232,7 @@
 										<input type="text" class="input-size" placeholder="请输入你的观点"/>
 									</div>
 									<div class="text-right mt-2">
-										<button type="button" class="btn btn-primary btn-sm" onclick="#">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
+										<button type="button" class="btn btn-primary btn-sm" onclick="">&nbsp;&nbsp;回&nbsp;&nbsp;复&nbsp;&nbsp;</button>
 									</div>
 								</li>
 							</ul>

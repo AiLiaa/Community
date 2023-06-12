@@ -25,4 +25,7 @@ public interface DiscussPostMapper extends BaseMapper<DiscussPost> {
 
     @Insert("insert into discuss_post (user_id,title,content,create_time) values (#{userId},#{title},#{content},#{createTime})")
     int insertDiscussPost(DiscussPost discussPost);
+
+    @Select("select * from discuss_post where id = #{id}")
+    DiscussPost selectDiscussPostById(int id);
 }
