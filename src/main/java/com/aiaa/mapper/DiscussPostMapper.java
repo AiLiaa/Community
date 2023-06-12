@@ -20,7 +20,7 @@ public interface DiscussPostMapper extends BaseMapper<DiscussPost> {
     @Select("select count(id) from discuss_post where if (#{userId} != 0, status != 2 and user_id = #{userId}, status != 2)")
     int selectDiscussPostRows(int userId);
 
-    @Update("update discuss_post set commentCount = #{commentCount} where id = #{id}")
+    @Update("update discuss_post set comment_count = #{commentCount} where id = #{id}")
     int updateCommentCount(int id, int commentCount);
 
     @Insert("insert into discuss_post (user_id,title,content,create_time) values (#{userId},#{title},#{content},#{createTime})")
