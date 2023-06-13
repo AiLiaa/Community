@@ -71,7 +71,7 @@ public class DiscussPostController implements CommunityConstant {
 
         // 评论分页信息
         page.setLimit(5);
-        page.setPath("discuss/detail/" + discussPostId);
+        page.setPath("/discuss/detail/" + discussPostId);
         page.setRows(post.getCommentCount());
 
         // 评论: 给帖子的评论
@@ -102,7 +102,7 @@ public class DiscussPostController implements CommunityConstant {
                         replyVo.put("reply", reply);
                         // 作者
                         replyVo.put("user", userService.findUserById(reply.getUserId()));
-                        // 回复目标
+                        // 回复目标 0是对帖的回复，id是对回复的回复
                         User target = reply.getTargetId() == 0 ? null : userService.findUserById(reply.getTargetId());
                         replyVo.put("target", target);
 
