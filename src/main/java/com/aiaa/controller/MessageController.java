@@ -61,7 +61,7 @@ public class MessageController {
         // 查询未读消息数量
         int letterUnreadCount = messageService.findAllLetterUnreadCount(user.getId());
 
-        System.out.println("letterUnreadCount:" + letterUnreadCount);
+//        System.out.println("letterUnreadCount:" + letterUnreadCount);
 
         model.addAttribute("letterUnreadCount", letterUnreadCount);
 

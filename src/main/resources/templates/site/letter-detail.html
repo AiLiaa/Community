@@ -65,7 +65,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-8">
-						<h6><b class="square"></b> 来自 <i class="text-success" th:utext="${target.username}">落基山脉下的闲人</i> 的私信</h6>
+						<h6><b class="square"></b> 来自 <i class="text-success" th:utext="${target.username}">珞珈山下的闲人</i> 的私信</h6>
 					</div>
 					<div class="col-4 text-right">
 						<button type="button" class="btn btn-secondary btn-sm" onclick="back();">返回</button>
@@ -86,7 +86,7 @@
 								<form>
 									<div class="form-group">
 										<label for="recipient-name" class="col-form-label">发给：</label>
-										<input type="text" class="form-control" id="recipient-name" value="落基山脉下的闲人">
+										<input type="text" class="form-control" id="recipient-name">
 									</div>
 									<div class="form-group">
 										<label for="message-text" class="col-form-label">内容：</label>
@@ -130,7 +130,7 @@
 								</button>
 							</div>
 							<div class="toast-body" th:utext="${map.letter.content}">
-								君不见, 黄河之水天上来, 奔流到海不复回!
+								私信内容
 							</div>
 						</div>
 					</li>
