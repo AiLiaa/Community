@@ -12,11 +12,20 @@ Community:
 
 spring:
 
-  # ThymeleafProperties 模板缓存
+  # Thymeleaf 模板缓存
   thymeleaf:
     cache: false
 
-  # DataSourceProperties
+  # Redis
+  redis:
+    # 可用数据库数量
+    # 数据库是由一个整数索引标识，而不是由一个数据库名称，可以直白的理解为配置不同的的库，占用的是不同的内存空间，
+    # 不同的库之间相互不影响，独立工作，只不过都是借宿在这个Redis实例上面生存的空间。
+    database: 0
+    host: localhost
+    port: 6379
+
+  # DataSource
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/community?characterEncoding=utf-8&useSSL=false&serverTimezone=Hongkong
@@ -28,7 +37,7 @@ spring:
       minimum-idle: 5
       idle-timeout: 30000
 
-  # MailProperties
+  # Mail
   mail:
     host: smtp.qq.com
     port: 465
@@ -39,7 +48,7 @@ spring:
   banner:
     charset: UTF-8
 
-# MybatisProperties
+# Mybatis
 mybatis:
   configuration:
     # 自动转驼峰
@@ -48,3 +57,4 @@ mybatis:
     use-generated-keys: true
     # 控制台标准日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
