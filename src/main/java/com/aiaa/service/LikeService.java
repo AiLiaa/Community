@@ -18,6 +18,10 @@ public class LikeService {
     //点赞
     public void like(int userId, int entityType, int entityId, int entityUserId) {
 
+        //使用 RedisTemplate 直接调用 opsFor** 来操作 Redis 数据库，
+        // 每执行一条命令是要重新拿一个连接，因此很耗资源。
+        // 如果让一个连接直接执行多条语句的方法就是使用 SessionCallback，
+        // 还可以使用 RedisCallback（它太复杂，不常用）。
         redisTemplate.execute(new SessionCallback() {
             @Override
             public Object execute(RedisOperations operations) throws DataAccessException {
@@ -25,9 +29,11 @@ public class LikeService {
                 String userLikeKey = RedisKeyUtil.getUserLikeKey(entityUserId);
                 SetOperations setOperations = operations.opsForSet();
                 ValueOperations valueOperations = operations.opsForValue();
+                //查询是否存在
                 Boolean isMember = setOperations.isMember(entityLikeKey, userId);
 
-                operations.multi();;
+                //事务开启(实际上事务中正确的命令得到执行，不正确的命令没有执行，谁出错谁负责。)
+                operations.multi();
                 if (isMember) {
                     setOperations.remove(entityLikeKey,userId);
                     valueOperations.decrement(userLikeKey);
