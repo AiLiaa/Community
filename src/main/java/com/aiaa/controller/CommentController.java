@@ -21,6 +21,7 @@ public class CommentController {
     @Autowired
     private HostHolder hostHolder;
 
+    //评论
     @RequestMapping(path = "/add/{discussPostId}", method = RequestMethod.POST)
     public String addComment(@PathVariable("discussPostId") int discussPostId, Comment comment) {
         comment.setUserId(hostHolder.getUser().getId());

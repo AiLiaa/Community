@@ -123,6 +123,7 @@ public class UserController {
     }
 
     // 个人主页
+    @LoginRequired
     @RequestMapping(path = "/profile/{userId}", method = RequestMethod.GET)
     public String getProfilePage(@PathVariable("userId") int userId, Model model) {
         User user = userService.findUserById(userId);

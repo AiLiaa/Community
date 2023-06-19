@@ -109,7 +109,7 @@ public class LoginController {
      * 获取验证码
      */
     @RequestMapping(path = "/kaptcha", method = RequestMethod.GET)
-    public void getKaptcha(HttpServletResponse response, HttpSession session) {
+    public void getKaptcha(HttpServletResponse response/*, HttpSession session*/) {
         // 生成验证码
         String text = kaptchaProducer.createText();
         BufferedImage image = kaptchaProducer.createImage(text);
@@ -117,7 +117,6 @@ public class LoginController {
 //        // 将验证码存入session
 //        session.setAttribute("kaptcha", text);
 
-        // 验证码存入redis
         String kaptchaOwner = CommunityUtil.generateUUID();
         Cookie cookie = new Cookie("kaptchaOwner", kaptchaOwner);
         cookie.setMaxAge(60);
@@ -125,6 +124,7 @@ public class LoginController {
         response.addCookie(cookie);
         // 将验证码存入Redis
         String redisKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
+        //60秒过期
         redisTemplate.opsForValue().set(redisKey, text, 60, TimeUnit.SECONDS);
 
         // 将突图片输出给浏览器

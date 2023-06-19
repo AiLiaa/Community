@@ -35,9 +35,12 @@ public class LikeService {
                 //事务开启(实际上事务中正确的命令得到执行，不正确的命令没有执行，谁出错谁负责。)
                 operations.multi();
                 if (isMember) {
+                    //移除key:集合中指定的值
                     setOperations.remove(entityLikeKey,userId);
+                    //key对应的value值减一
                     valueOperations.decrement(userLikeKey);
                 } else {
+                    //向key:集合添加元素
                     setOperations.add(entityLikeKey,userId);
                     valueOperations.increment(userLikeKey);
                 }
@@ -65,18 +68,21 @@ public class LikeService {
     // 查询某实体点赞的数量
     public long findEntityLikeCount(int entityType, int entityId) {
         String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
+        //获取集合的大小，地层调用的还是 zCard(K key)
         return redisTemplate.opsForSet().size(entityLikeKey);
     }
 
     // 查询某人对某实体的点赞状态
     public int findEntityLikeStatus(int userId, int entityType, int entityId) {
         String entityLikeKey = RedisKeyUtil.getEntityLikeKey(entityType, entityId);
+        //查询key:集合中是否存在userId
         return redisTemplate.opsForSet().isMember(entityLikeKey, userId) ? 1 : 0;
     }
 
     // 查询某个用户获得的赞
     public int findUserLikeCount(int userId) {
         String userLikeKey = RedisKeyUtil.getUserLikeKey(userId);
+        //根据key获取值
         Integer count = (Integer) redisTemplate.opsForValue().get(userLikeKey);
         return count == null ? 0 : count.intValue();
     }

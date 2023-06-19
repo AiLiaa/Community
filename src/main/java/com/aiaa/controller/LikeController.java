@@ -22,6 +22,7 @@ public class LikeController {
     @Autowired
     private HostHolder hostHolder;
 
+    //点赞
     @RequestMapping(path = "/like", method = RequestMethod.POST)
     @ResponseBody
     public String like(int entityType, int entityId, int entityUserId) {
