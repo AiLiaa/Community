@@ -178,6 +178,12 @@ public class UserService {
         return map;
     }
 
+    public int updatePassword(int id, String password) {
+        int rows = userMapper.updatePassword(id,password);
+        clearCache(id);
+        return rows;
+    }
+
     public LoginTicket findLoginTicket(String ticket) {
 //        return loginTicketMapper.selectByTicket(ticket);
         String redisKey = RedisKeyUtil.getTicketKey(ticket);

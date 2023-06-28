@@ -122,6 +122,35 @@ public class UserController {
         }
     }
 
+
+    //修改密码
+    @RequestMapping(value = "/updatePassword", method = RequestMethod.POST)
+    public String updatePassword(String oldPassword, String newPassword, Model model) {
+        if (StringUtils.isBlank(newPassword) || StringUtils.isBlank(oldPassword)) {
+            model.addAttribute("oldPasswordMsg", "密码不能为空");
+            return "site/setting";
+        }
+        if (oldPassword.equals(newPassword)) {
+            model.addAttribute("oldPasswordMsg", "新旧密码不能一致");
+            return "site/setting";
+        }
+        User user = hostHolder.getUser();
+        oldPassword = CommunityUtil.md5(oldPassword + user.getSalt());
+        if (!oldPassword.equals(user.getPassword())) {
+            model.addAttribute("oldPasswordMsg", "密码错误");
+            return "site/setting";
+        }
+        newPassword = CommunityUtil.md5(newPassword + user.getSalt());
+
+        userService.updatePassword(user.getId(), newPassword);
+
+        user.setPassword(newPassword);
+
+        hostHolder.setUser(user);
+
+        return "redirect:/index";
+    }
+
     // 个人主页
     @LoginRequired
     @RequestMapping(path = "/profile/{userId}", method = RequestMethod.GET)
