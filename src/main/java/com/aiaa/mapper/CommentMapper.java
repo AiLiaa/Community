@@ -24,4 +24,6 @@ public interface CommentMapper extends BaseMapper<Comment> {
             "values(#{userId},#{entityType},#{entityId},#{targetId},#{content},#{status},#{createTime})")
     int insertComment(Comment comment);
 
+    @Select("select * from comment where id = #{id}")
+    Comment selectCommentById(int id);
 }

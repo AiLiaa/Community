@@ -64,13 +64,13 @@
 					<ul class="nav nav-tabs mb-3">
 						<li class="nav-item">
 							<a class="nav-link position-relative active" th:href="@{/letter/list}">
-								朋友私信
-								<span class="badge badge-danger" th:text="${letterUnreadCount}" th:if="${letterUnreadCount!=0}">
-									3
-								</span></a>
+								朋友私信<span class="badge badge-danger" th:text="${letterUnreadCount}" th:if="${letterUnreadCount!=0}">15</span>
+							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link position-relative" href="notice.html">系统通知<span class="badge badge-danger">27</span></a>
+							<a class="nav-link position-relative" th:href="@{/notice/list}">
+								系统通知<span class="badge badge-danger" th:text="${noticeUnreadCount}" th:if="${noticeUnreadCount!=0}">10</span>
+							</a>
 						</li>
 					</ul>
 					<button type="button" class="btn btn-primary btn-sm position-absolute rt-0" data-toggle="modal" data-target="#sendModal">发私信</button>
@@ -162,51 +162,51 @@
 		</div>
 
 		<!-- 尾部 -->
-		<<footer class="bg-dark">
-		<div class="container">
-			<div class="row">
-				<!-- 公司信息 -->
-				<div class="col-8 detail-info">
-					<div class="row">
-						<div class="col">
-							<ul class="nav">
-								<li class="nav-item">
-									<a class="nav-link text-light" href="#">关于我们</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link text-light" href="#">加入我们</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link text-light" href="#">意见反馈</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link text-light" href="#">企业服务</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link text-light" href="#">联系我们</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link text-light" href="#">免责声明</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link text-light" href="#">友情链接</a>
-								</li>
-							</ul>
+		<footer class="bg-dark">
+			<div class="container">
+				<div class="row">
+					<!-- 公司信息 -->
+					<div class="col-8 detail-info">
+						<div class="row">
+							<div class="col">
+								<ul class="nav">
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">关于我们</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">加入我们</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">意见反馈</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">企业服务</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">联系我们</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">免责声明</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link text-light" href="#">友情链接</a>
+									</li>
+								</ul>
+							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<ul class="nav btn-group-vertical company-info">
-								<li class="nav-item text-white-50">
-									地址：湖北省武汉市
-								</li>
-							</ul>
+						<div class="row">
+							<div class="col">
+								<ul class="nav btn-group-vertical company-info">
+									<li class="nav-item text-white-50">
+										地址：湖北省武汉市
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</footer>
+		</footer>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>

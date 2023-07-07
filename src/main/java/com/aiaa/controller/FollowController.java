@@ -1,7 +1,9 @@
 package com.aiaa.controller;
 
+import com.aiaa.entity.Event;
 import com.aiaa.entity.Page;
 import com.aiaa.entity.User;
+import com.aiaa.event.EventProducer;
 import com.aiaa.service.FollowService;
 import com.aiaa.service.UserService;
 import com.aiaa.util.CommunityConstant;
@@ -27,6 +29,9 @@ public class FollowController implements CommunityConstant {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     //关注
     @RequestMapping(path = "/follow", method = RequestMethod.POST)
     @ResponseBody
@@ -34,6 +39,15 @@ public class FollowController implements CommunityConstant {
         User user = hostHolder.getUser();
 
         followService.follow(user.getId(), entityType, entityId);
+
+        // 触发关注事件
+        Event event = new Event()
+                .setTopic(TOPIC_FOLLOW)
+                .setUserId(hostHolder.getUser().getId())
+                .setEntityType(entityType)
+                .setEntityId(entityId)
+                .setEntityUserId(entityId);
+        eventProducer.fireEvent(event);
 
         return CommunityUtil.getJSONString(0, "已关注!");
     }
