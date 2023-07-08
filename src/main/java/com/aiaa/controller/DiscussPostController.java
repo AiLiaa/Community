@@ -1,9 +1,7 @@
 package com.aiaa.controller;
 
-import com.aiaa.entity.Comment;
-import com.aiaa.entity.DiscussPost;
-import com.aiaa.entity.Page;
-import com.aiaa.entity.User;
+import com.aiaa.entity.*;
+import com.aiaa.event.EventProducer;
 import com.aiaa.service.CommentService;
 import com.aiaa.service.DiscussPostService;
 import com.aiaa.service.LikeService;
@@ -40,6 +38,9 @@ public class DiscussPostController implements CommunityConstant {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     /**
      * 发布帖子
      */
@@ -57,6 +58,14 @@ public class DiscussPostController implements CommunityConstant {
         post.setContent(content);
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
+
+        //触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(CommunityConstant.ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
 
         return CommunityUtil.getJSONString(0, "发布成功!");
     }

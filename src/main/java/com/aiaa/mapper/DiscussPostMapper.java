@@ -17,6 +17,9 @@ public interface DiscussPostMapper extends BaseMapper<DiscussPost> {
             "limit #{offset},#{limit}")
     List<DiscussPost> selectDiscussPosts(int userId, int offset, int limit);
 
+    @Select("select * from discuss_post where if (#{userId} != 0, status != 2 and user_id = #{userId}, status != 2)")
+    List<DiscussPost> selectDiscussPostsALL(int userId);
+
     @Select("select count(id) from discuss_post where if (#{userId} != 0, status != 2 and user_id = #{userId}, status != 2)")
     int selectDiscussPostRows(int userId);
 
@@ -28,4 +31,5 @@ public interface DiscussPostMapper extends BaseMapper<DiscussPost> {
 
     @Select("select * from discuss_post where id = #{id}")
     DiscussPost selectDiscussPostById(int id);
+
 }
