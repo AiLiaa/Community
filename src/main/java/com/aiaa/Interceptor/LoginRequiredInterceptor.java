@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 @Component
+@Deprecated
 public class LoginRequiredInterceptor implements HandlerInterceptor {
 
     @Autowired

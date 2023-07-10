@@ -9,6 +9,7 @@ import com.aiaa.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,7 @@ public class HomeController {
     /**
      * 分页显示首页帖子
      */
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(path = {"/index","/"},method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page){
         //logger.info("首页显示10个帖子");
@@ -56,6 +57,16 @@ public class HomeController {
         }
         model.addAttribute("discussPosts", discussPosts);
         return "/index";
+    }
+
+    @RequestMapping(path = "/error", method = RequestMethod.GET)
+    public String getErrorPage() {
+        return "error/500";
+    }
+
+    @RequestMapping(path = "/denied", method = RequestMethod.GET)
+    public String getDeniedPage() {
+        return "/error/404";
     }
 
 }

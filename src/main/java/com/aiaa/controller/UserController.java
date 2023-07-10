@@ -54,14 +54,14 @@ public class UserController {
     @Autowired
     private FollowService followService;
 
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
     public String getSettingPage() {
         return "/site/setting";
     }
 
     //上传头像
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model) {
         if (headerImage == null) {
@@ -152,7 +152,7 @@ public class UserController {
     }
 
     // 个人主页
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(path = "/profile/{userId}", method = RequestMethod.GET)
     public String getProfilePage(@PathVariable("userId") int userId, Model model) {
         User user = userService.findUserById(userId);

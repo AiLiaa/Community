@@ -34,7 +34,7 @@ public class MessageController implements CommunityConstant {
     private UserService userService;
 
     // 私信列表
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(path = "/letter/list", method = RequestMethod.GET)
     public String getLetterList(Model model, Page page) {
         User user = hostHolder.getUser();
@@ -72,7 +72,7 @@ public class MessageController implements CommunityConstant {
     }
 
     //私信详情
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(path = "/letter/detail/{conversationId}", method = RequestMethod.GET)
     public String getLetterDetail(@PathVariable("conversationId") String conversationId, Page page, Model model) {
         // 分页信息
@@ -134,7 +134,7 @@ public class MessageController implements CommunityConstant {
     }
 
     //发私信
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(path = "/letter/send", method = RequestMethod.POST)
     @ResponseBody
     public String sendLetter(String toName, String content) {
