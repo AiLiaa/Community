@@ -12,7 +12,7 @@
 <body>
 	<div class="nk-container">
 		<!-- 头部 -->
-		<header class="bg-dark sticky-top">
+		<header class="bg-dark sticky-top" th:replace="index::header">
 			<div class="container">
 				<!-- 导航 -->
 				<nav class="navbar navbar-expand-lg navbar-dark">
@@ -68,7 +68,7 @@
 				<div class="position-relative">
 					<ul class="nav nav-tabs">
 						<li class="nav-item">
-							<a class="nav-link active" th:href="@{|/user/profile/${loginUser.id}|}">个人信息</a>
+							<a class="nav-link active" th:href="@{|/user/profile/${user.id}|}">个人信息</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="my-post.html">我的帖子</a>

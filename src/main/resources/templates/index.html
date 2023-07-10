@@ -3,6 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!--访问该页面时,在此处生成CSRF令牌.-->
+	<!--	<meta name="_csrf" th:content="${_csrf.token}">-->
+	<!--	<meta name="_csrf_header" th:content="${_csrf.headerName}">-->
 <!--	<link rel="icon" href="./static/img/favicon.png"/>-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
 	<link rel="stylesheet" th:href="@{/css/global.css}" />
@@ -37,7 +40,7 @@
 						<li class="nav-item ml-3 btn-group-vertical" th:if="${loginUser==null}">
 							<a class="nav-link" th:href="@{/login}">登录</a>
 						</li>
-						<li class="nav-item ml-3 btn-group-vertical dropdown">
+						<li class="nav-item ml-3 btn-group-vertical dropdown" th:if="${loginUser!=null}">
 
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<img th:src="${loginUser.headerUrl}" class="rounded-circle" style="width:30px;"/>
