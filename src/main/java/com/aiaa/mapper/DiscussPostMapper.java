@@ -32,4 +32,13 @@ public interface DiscussPostMapper extends BaseMapper<DiscussPost> {
     @Select("select * from discuss_post where id = #{id}")
     DiscussPost selectDiscussPostById(int id);
 
+    @Update("update discuss_post set type = #{type} where id = #{id}")
+    int updateType(int id, int type);
+
+    @Update("update discuss_post set status = #{status} where id = #{id}")
+    int updateStatus(int id, int status);
+
+    @Update("update discuss_post set score = #{score} where id = #{id}")
+    int updateScore(int id, double score);
+
 }
