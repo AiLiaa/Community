@@ -72,6 +72,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                             PrintWriter writer = response.getWriter();
                             writer.write(CommunityUtil.getJSONString(403, "你还没有登录哦!"));
                         } else {
+                            response.setContentType("application/plain;charset=utf-8");
+                            PrintWriter writer = response.getWriter();
+                            writer.write(CommunityUtil.getJSONString(403, "你还没有登录哦!"));
                             response.sendRedirect(request.getContextPath() + "/login");
                         }
                     }
@@ -86,6 +89,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                             PrintWriter writer = response.getWriter();
                             writer.write(CommunityUtil.getJSONString(403, "你没有访问此功能的权限!"));
                         } else {
+                            response.setContentType("application/plain;charset=utf-8");
+                            PrintWriter writer = response.getWriter();
+                            writer.write(CommunityUtil.getJSONString(403, "你没有访问此功能的权限!"));
                             response.sendRedirect(request.getContextPath() + "/denied");
                         }
                     }

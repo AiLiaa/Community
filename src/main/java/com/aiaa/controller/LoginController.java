@@ -11,7 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -168,6 +171,13 @@ public class LoginController {
             cookie.setPath(contextPath);
             cookie.setMaxAge(expiredSeconds);
             response.addCookie(cookie);
+
+            User user = userService.findUserById((Integer) map.get("userId"));
+            // 构建用户认证的结果,并存入SecurityContext,以便于Security进行授权.
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    user, user.getPassword(), userService.getAuthorities(user.getId()));
+            SecurityContextHolder.setContext(new SecurityContextImpl(authentication));
+
             return "redirect:/index";
         } else {
             model.addAttribute("usernameMsg", map.get("usernameMsg"));

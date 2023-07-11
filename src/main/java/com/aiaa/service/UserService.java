@@ -174,6 +174,7 @@ public class UserService {
         redisTemplate.opsForValue().set(redisKey, loginTicket);
 
         map.put("ticket", loginTicket.getTicket());
+        map.put("userId", user.getId());
         return map;
     }
 
