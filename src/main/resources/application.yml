@@ -52,6 +52,17 @@ spring:
     connection-timeout: 1s
     socket-timeout: 30s
 
+  # Spring线程池
+  task:
+    execution:
+      pool:
+        core-size: 8
+        max-size: 15
+        queue-capacity: 100
+    scheduling:
+      pool:
+        size: 5
+
   # Mail
   mail:
     host: smtp.qq.com
