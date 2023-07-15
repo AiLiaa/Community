@@ -70,10 +70,10 @@
 				<!-- 筛选条件 -->
 				<ul class="nav nav-tabs mb-3">
 					<li class="nav-item">
-						<a class="nav-link active" href="#">最新</a>
+						<a class="nav-link active" id="last" th:href="@{/index}">最新</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">最热</a>
+						<a class="nav-link" id="hot" th:href="@{/index/hot}">最热</a>
 					</li>
 				</ul>
 				<button type="button" class="btn btn-primary btn-sm position-absolute rt-0" data-toggle="modal" data-target="#publishModal">我要发布</button>
@@ -136,9 +136,9 @@
 						<div class="text-muted font-size-12">
 							<u class="mr-3" th:utext="${map.user.username}">寒江雪</u> 发布于 <b th:text="${#dates.format(map.post.createTime,'yyyy-MM-dd HH:mm:ss')}">2023-04-15 15:32:18</b>
 							<ul class="d-inline float-right">
-								<li class="d-inline ml-2">赞 11</li>
+								<li class="d-inline ml-2">赞 <span th:text="${map.likeCount}">11</span></li>
 								<li class="d-inline ml-2">|</li>
-								<li class="d-inline ml-2">回帖 7</li>
+								<li class="d-inline ml-2">回帖 <span th:text="${map.post.commentCount}">7</span></li>
 							</ul>
 						</div>
 					</div>

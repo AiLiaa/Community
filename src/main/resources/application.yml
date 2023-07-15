@@ -63,6 +63,29 @@ spring:
       pool:
         size: 5
 
+  # quartz
+  quartz:
+    job-store-type: jdbc
+    scheduler-name: communityScheduler
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: AUTO
+          jobStore:
+            #持久化方式，默认存储在内存中，此处使用数据库方式
+            class: org.springframework.scheduling.quartz.LocalDataSourceJobStore
+            #需要为JobStore选择一个DriverDelegate才能使用。DriverDelegate负责执行特定数据库可能需要的任何JDBC工作
+            # StdJDBCDelegate是一个使用“vanilla”JDBC代码（和SQL语句）来执行其工作的委托,用于完全符合JDBC的驱动程序
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            #设置为“true”以打开群集功能。如果有多个Quartz实例使用同一组数据库表，则此属性必须设置为“true”，否则您将遇到破坏
+            isClustered: true
+          threadPool:
+            #实例化ThreadPool时，使用的线程类为SimpleThreadPool
+            class: org.quartz.simpl.SimpleThreadPool
+            #只有1到100之间的数字是非常实用的
+            threadCount: 5
+
   # Mail
   mail:
     host: smtp.qq.com

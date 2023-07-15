@@ -22,6 +22,10 @@ public class DiscussPostService {
         return discussPostMapper.selectDiscussPosts(userId,offset,limit);
     }
 
+    public List<DiscussPost> findDiscussPostsWithScore(int userId, int offset, int limit){
+        return discussPostMapper.selectDiscussPostsWithScore(userId,offset,limit);
+    }
+
     public int findDiscussPostRows(int userId){
         return discussPostMapper.selectDiscussPostRows(userId);
     }

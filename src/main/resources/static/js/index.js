@@ -1,6 +1,18 @@
 $(function(){
 	$("#publishBtn").click(publish);
+	$("#hot").click(hot);
+	$("#last").click(last);
 });
+
+function hot() {
+	$("#last").classList.remove("active");
+	$("#hot").classList.add("active");
+}
+
+function last() {
+	$("#hot").classList.remove("active");
+	$("#last").classList.add("active");
+}
 
 function publish() {
 	$("#publishModal").modal("hide");
