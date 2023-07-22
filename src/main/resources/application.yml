@@ -97,6 +97,20 @@ spring:
   banner:
     charset: UTF-8
 
+  # caffeine
+  cache:
+    type: caffeine
+#    # 缓存最大数量和过期时间
+#    caffeine:
+#      spec: maximumSize=15,expireAfterWrite=180s
+# 已在DiscussPostService代码中配置如下属性max-size expire-seconds
+
+# @Value属性值注入
+caffeine:
+  posts:
+    max-size: 15
+    expire-seconds: 180
+
 # Mybatis
 mybatis:
   configuration:
