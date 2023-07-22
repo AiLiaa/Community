@@ -153,4 +153,11 @@ public class DiscussPostService {
         return discussPostMapper.updateScore(id, score);
     }
 
+    public List<DiscussPost> selectDiscussPostByCommentEntityId(int userId, int offset, int limit){
+        return discussPostMapper.selectDiscussPostListByCommentEntityId(userId,offset,limit);
+    }
+
+    public DiscussPost findDiscussPostByCommentEntityId(int entityId){
+        return discussPostMapper.selectDiscussPostByCommentEntityId(entityId);
+    }
 }

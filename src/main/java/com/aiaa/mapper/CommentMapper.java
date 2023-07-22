@@ -26,4 +26,14 @@ public interface CommentMapper extends BaseMapper<Comment> {
 
     @Select("select * from comment where id = #{id}")
     Comment selectCommentById(int id);
+
+    @Select("select count(entity_id) from comment where user_id = #{userId} and entity_type = 1")
+    int selectCountByUserId(int userId);
+
+    @Select("select * from comment where status = 0 and entity_type = #{entityType} and " +
+            "user_id = #{userId} " +
+            "order by create_time asc " +
+            "limit #{offset}, #{limit}")
+    List<Comment> selectCommentsByUserId(int entityType,int userId, int offset, int limit);
+
 }

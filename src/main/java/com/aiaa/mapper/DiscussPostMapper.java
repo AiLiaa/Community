@@ -46,4 +46,12 @@ public interface DiscussPostMapper extends BaseMapper<DiscussPost> {
     @Update("update discuss_post set score = #{score} where id = #{id}")
     int updateScore(int id, double score);
 
+    @Select("select * from discuss_post where id in " +
+            "(select entity_id from comment where user_id = #{userId}) " +
+            "order by type desc,create_time desc " +
+            "limit #{offset},#{limit}")
+    List<DiscussPost> selectDiscussPostListByCommentEntityId(int userId, int offset, int limit);
+
+    @Select("select * from discuss_post where id = #{entityId}")
+    DiscussPost selectDiscussPostByCommentEntityId(int entityId);
 }

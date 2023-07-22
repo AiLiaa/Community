@@ -1,13 +1,16 @@
 package com.aiaa.controller;
 
 import com.aiaa.annotation.LoginRequired;
+import com.aiaa.entity.Comment;
+import com.aiaa.entity.DiscussPost;
+import com.aiaa.entity.Page;
 import com.aiaa.entity.User;
-import com.aiaa.service.FollowService;
-import com.aiaa.service.LikeService;
-import com.aiaa.service.UserService;
+import com.aiaa.service.*;
+import com.aiaa.util.CommunityConstant;
 import com.aiaa.util.CommunityUtil;
 import com.aiaa.util.HostHolder;
 import org.apache.commons.lang.StringUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.aiaa.util.CommunityConstant.ENTITY_TYPE_USER;
 
@@ -53,6 +60,12 @@ public class UserController {
 
     @Autowired
     private FollowService followService;
+
+    @Autowired
+    private DiscussPostService discussPostService;
+
+    @Autowired
+    private CommentService commentService;
 
 //    @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
@@ -180,6 +193,82 @@ public class UserController {
         model.addAttribute("hasFollowed", hasFollowed);
 
         return "/site/profile";
+    }
+
+    // 我的帖子
+    @RequestMapping(path = "/profile/myPost/{userId}", method = RequestMethod.GET)
+    public String getProfilePost(@PathVariable("userId") int userId, Page page, Model model) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在!");
+        }
+        // 用户
+        model.addAttribute("user", user);
+
+        page.setLimit(5);
+        page.setRows(discussPostService.findDiscussPostRows(userId));
+        page.setPath("/user/profile/myPost/" + userId);
+
+        //帖子数
+        int row = discussPostService.findDiscussPostRows(userId);
+        model.addAttribute("myRow",row);
+
+        List<DiscussPost> discussPostList = discussPostService.findDiscussPosts(userId, page.getOffset(), page.getLimit());
+
+        List<Map<String, Object>> myDiscussPosts = new ArrayList<>();
+
+        if (discussPostList != null){
+            for (DiscussPost post : discussPostList) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("post",post);
+
+                long likeCount = likeService.findEntityLikeCount(CommunityConstant.ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount",likeCount);
+
+                myDiscussPosts.add(map);
+            }
+        }
+        model.addAttribute("myDiscussPosts", myDiscussPosts);
+
+        return "/site/my-post";
+    }
+
+    // 我的评论
+    @RequestMapping(path = "/profile/myReply/{userId}", method = RequestMethod.GET)
+    public String getProfileReply(@PathVariable("userId") int userId, Page page, Model model) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在!");
+        }
+        // 用户
+        model.addAttribute("user", user);
+
+        page.setLimit(10);
+        page.setRows(commentService.findCommentCount(userId));
+        page.setPath("/user/profile/myReply/" + userId);
+
+        //评论数
+        int row = commentService.findCommentCount(userId);
+        model.addAttribute("replyPostRow",row);
+
+        List<Comment> commentList = commentService.findCommentsByUserId(CommunityConstant.ENTITY_TYPE_POST, userId, page.getOffset(), page.getLimit());
+
+        List<Map<String, Object>> myComments = new ArrayList<>();
+
+        if (commentList != null){
+            for (Comment comment: commentList ) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("comment",comment);
+
+                map.put("comment_post",discussPostService.findDiscussPostByCommentEntityId(comment.getEntityId()));
+
+                myComments.add(map);
+            }
+        }
+
+        model.addAttribute("myComments", myComments);
+
+        return "/site/my-reply";
     }
 
 }
